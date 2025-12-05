@@ -1,26 +1,24 @@
 import {App, ConfigProvider, Layout, theme} from 'antd';
-import {createContext, useEffect, useState} from 'react';
+import {createContext, useState} from 'react';
 
-import {PREFERRED_THEME} from '../../shared/setting-defs';
-import Notification from '../components/Notification';
-import {getSetting, setSetting, setTheme} from '../polyfills';
-import {loadHighlightTheme} from '../utils/highlight-theme';
+import {PREFERRED_THEME} from '../../shared/setting-defs.js';
+import Notification from '../components/Notification.jsx';
+import {getSetting, setSetting, setTheme} from '../polyfills.js';
+import {loadHighlightTheme} from '../utils/highlight-theme.js';
 
 const systemPrefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = await getSetting(PREFERRED_THEME);
+setTheme(savedTheme);
 
 export const ThemeContext = createContext(null);
 
 export const ThemeProvider = ({children}) => {
-  const [preferredTheme, setPreferredTheme] = useState('system');
+  const [preferredTheme, setPreferredTheme] = useState(savedTheme);
 
   const isDarkTheme =
     preferredTheme === 'dark' || (preferredTheme === 'system' && systemPrefersDarkTheme);
 
   loadHighlightTheme(isDarkTheme);
-
-  useEffect(() => {
-    initTheme();
-  }, []);
 
   const handleDarkClass = () => {
     if (isDarkTheme) {
@@ -31,12 +29,6 @@ export const ThemeProvider = ({children}) => {
   };
 
   handleDarkClass();
-
-  const initTheme = async () => {
-    const savedTheme = await getSetting(PREFERRED_THEME);
-    setTheme(savedTheme);
-    setPreferredTheme(savedTheme);
-  };
 
   const updateTheme = async (theme) => {
     setTheme(theme);
