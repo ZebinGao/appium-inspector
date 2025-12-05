@@ -10,6 +10,7 @@
 <div align="center">
 
 ![Current Version](https://img.shields.io/github/package-json/v/appium/appium-inspector)
+
 ![Current Version GitHub Downloads](https://img.shields.io/github/downloads/appium/appium-inspector/latest/total)
 ![Total GitHub Downloads](https://img.shields.io/github/downloads/appium/appium-inspector/total)
 [![Crowdin](https://badges.crowdin.net/appium-desktop/localized.svg)](https://crowdin.com/project/appium-desktop)
